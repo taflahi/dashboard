@@ -36,6 +36,8 @@ class RegisterController extends Controller
       		$meta->save();
       	}
 
+         $data['business_id'] = $meta->hash;
+
       	$site = Site::where('meta_id', $meta->id)->first();
       	if(!$site){
       		$site = new Site;
@@ -49,11 +51,11 @@ class RegisterController extends Controller
 	      	if (!$process->isSuccessful()) {
 		       	throw new ProcessFailedException($process);
 	      	}
-      	}
 
-      	$data['business_id'] = $meta->hash;
-
-      	return view('register', $data);
+            return view('register', $data);
+      	} else {
+            return view('details', $data);
+         }
    }
 
    public function edit(Request $request){
